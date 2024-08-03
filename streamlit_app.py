@@ -4,6 +4,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import PIL
 import os
+import traceback
 
 # Load the trained model
 model_path = "grape_leaf_disease_3.0.h5"  # Update this to your model's path
@@ -14,6 +15,9 @@ try:
     st.success('Model loaded successfully.')
 except Exception as e:
     st.error(f'Error loading model: {e}')
+    with open('error_log.txt', 'a') as log_file:
+        log_file.write(f'Model loading error: {e}\n')
+        log_file.write(traceback.format_exc())
     st.stop()  # Stop execution if model cannot be loaded
 
 # Define categories
@@ -26,23 +30,22 @@ st.write("Upload an image of a grape leaf to predict the disease.")
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # Error handling for image processing
     try:
         # Load and preprocess the image
         image = PIL.Image.open(uploaded_file)
         image = image.resize((256, 256))
         img_array = np.array(image)
-        
+
         # Check the shape of the image array
         st.write(f"Image shape: {img_array.shape}")
-        
+
         # Ensure image is in the correct format (3 channels)
         if img_array.ndim == 2:  # If grayscale
             img_array = np.stack([img_array]*3, axis=-1)  # Convert to RGB
         elif img_array.shape[-1] != 3:  # If not RGB
             st.error('Image must have 3 channels (RGB).')
             st.stop()
-        
+
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
         img_array = img_array / 255.0  # Normalize the image
 
@@ -57,3 +60,6 @@ if uploaded_file is not None:
         st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
     except Exception as e:
         st.error(f'Error processing image: {e}')
+        with open('error_log.txt', 'a') as log_file:
+            log_file.write(f'Image processing error: {e}\n')
+            log_file.write(traceback.format_exc())
