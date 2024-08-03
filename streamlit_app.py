@@ -6,7 +6,7 @@ import PIL
 import os
 
 # Load the trained model
-model_path = "grape_leaf_disease_3.0 .h5"  # Update this to your model's path
+model_path = "grape_leaf_disease_3.0.h5"  # Update this to your model's path
 
 # Error handling for model loading
 try:
