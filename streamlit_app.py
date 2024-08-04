@@ -30,19 +30,19 @@ categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 st.markdown("""
     <style>
     .main {
-        background: linear-gradient(to right, #8A2BE2, #FF69B4);
-        padding: 10px;
-        border-radius: 30px;
+        background: linear-gradient(to right, #000000, #3A0A4B); /* Smooth gradient from black to dark violet */
+        padding: 20px;
+        border-radius: 10px;
     }
     .title {
-        font-size: 3.5em;
+        font-size: 2em;
         font-weight: bold;
         color: #FFFFFF;
         text-align: center;
         margin-bottom: 20px;
     }
     .subtitle {
-        font-size: 1.7em;
+        font-size: 1.5em;
         color: #FFFFFF;
         text-align: center;
         margin-bottom: 10px;
@@ -58,33 +58,34 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .uploaded-image img {
-        width: 50%;
-        max-width: 300px;
-        border: 10px solid #FFFFFF;
-        border-radius: 50%; /* Circular shape */
+        width: 100%;
+        max-width: 400px; /* Adjust the max-width to control image size */
+        border: 5px solid #FFFFFF;
+        border-radius: 10px;
+        object-fit: contain; /* Ensure the image scales properly */
     }
     .result-container {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.8); /* Slightly opaque background */
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-top: 20px;
     }
     .result-title {
-        font-size: 3.5em;
+        font-size: 1.2em;
         font-weight: bold;
         color: #4B0082;
-        background-color: #D3D3D3; /* Light gray background */
-        padding: 20px;
-        border-radius: 10px;
+        background-color: #D3D3D3; /* Light gray background for prediction box */
+        padding: 10px;
+        border-radius: 5px;
         text-align: center;
     }
     .result-confidence {
-        font-size: 2.4em;
+        font-size: 1.5em;
         font-weight: bold;
         color: #2E8B57;
         margin-top: 10px;
@@ -93,6 +94,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Streamlit app
+st.markdown('<div class="main">', unsafe_allow_html=True)  # Apply main background style
 st.markdown('<div class="title">Grape Disease Prediction</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Upload an image of a grape leaf to predict the disease.</div>', unsafe_allow_html=True)
 
@@ -101,12 +103,12 @@ uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"], key='file_uplo
 if uploaded_file is not None:
     try:
         image = Image.open(uploaded_file)
-        image = image.resize((256, 256))
+        image = image.resize((256, 256))  # Resize image for consistency
         img_array = np.array(image) / 255.0
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
         st.markdown('<div class="uploaded-image">', unsafe_allow_html=True)
-        st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+        st.image(uploaded_file, caption='Uploaded Image', use_column_width=False)
         st.markdown('</div>', unsafe_allow_html=True)
         
         # Make prediction
@@ -133,3 +135,5 @@ if uploaded_file is not None:
         logging.error(f"Error processing image: {e}")
         st.error(f"Error processing image: {e}")
         st.stop()
+
+st.markdown('</div>', unsafe_allow_html=True)  # Close main div
