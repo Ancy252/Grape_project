@@ -30,10 +30,12 @@ st.markdown("""
         background: linear-gradient(to bottom, #3b0a45, #000000);
     }
     .stImage img {
-        max-width: 90%;
-        margin: 0 auto;
-        display: block;
-    }
+    max-width: 60%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
     .prediction-box {
         border: 2px solid #6a1b9a;
         border-radius: 15px;
@@ -41,8 +43,8 @@ st.markdown("""
         background-color: #6a1b9a;
         color: white;
         text-align: center;
-        font-size: 20px;
-        margin-top: 20px;
+        font-size: 28px;
+        margin-top: 23px;
     }
     .prediction-box b {
         font-weight: bold;
