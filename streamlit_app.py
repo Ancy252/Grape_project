@@ -3,6 +3,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
 import logging
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -43,6 +44,7 @@ if uploaded_file is not None:
         
         # Make prediction
         try:
+            logging.info("Starting prediction...")
             predictions = model.predict(img_array)
             logging.info(f"Predictions: {predictions}")
             st.write(f"Predictions: {predictions}")
@@ -53,11 +55,14 @@ if uploaded_file is not None:
 
             st.write(f'Prediction: {predicted_label}')
             st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
+        except BrokenPipeError as e:
+            logging.error(f"Broken pipe error during prediction: {e}")
+            st.error(f"Error during prediction: {e}")
         except Exception as e:
             logging.error(f"Error during prediction: {e}")
             st.error(f"Error during prediction: {e}")
 
     except Exception as e:
-        logging.error(f"Error processing single image: {e}")
-        st.error(f"Error processing single image: {e}")
+        logging.error(f"Error processing image: {e}")
+        st.error(f"Error processing image: {e}")
         st.stop()
