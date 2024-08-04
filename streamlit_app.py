@@ -18,7 +18,7 @@ except Exception as e:
     st.stop()
 
 # Define categories
-categories = ["Black Rot","Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
+categories = ["Black Rot","ESCA","Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
 
 # Apply custom CSS for background and prediction box styling
 st.markdown("""
