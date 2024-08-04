@@ -25,36 +25,50 @@ st.markdown("""
     <style>
     .reportview-container {
         background: linear-gradient(to bottom, #3b0a45, #000000);
+        color: #ffffff;
     }
     .sidebar .sidebar-content {
         background: linear-gradient(to bottom, #3b0a45, #000000);
+        color: #ffffff;
     }
     .stImage img {
-    max-width: 60%;
-    margin: 0 auto;
-    display: block;
-    text-align: center;
-}
-
+        max-width: 80%;
+        border-radius: 10px;
+        margin: 0 auto;
+        display: block;
+    }
     .prediction-box {
         border: 2px solid #6a1b9a;
         border-radius: 15px;
-        padding: 15px;
-        background-color: #6a1b9a;
+        padding: 20px;
+        background: linear-gradient(to right, #6a1b9a, #d32f2f);
         color: white;
         text-align: center;
-        font-size: 28px;
-        margin-top: 23px;
+        font-size: 24px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     .prediction-box b {
         font-weight: bold;
+    }
+    .stButton button {
+        background-color: #d32f2f;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .stButton button:hover {
+        background-color: #b71c1c;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # Streamlit app
 st.title("Grape Disease Prediction")
-st.write("Upload an image of a grape leaf to predict the disease.")
+st.subheader("Upload a grape leaf image to detect the disease with confidence.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
