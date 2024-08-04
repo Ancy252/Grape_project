@@ -13,6 +13,7 @@ model_path = 'grape_and_Pomogranate_disease_streamlit.h5'
 try:
     model = load_model_cached(model_path)
     st.success("Model loaded successfully!")
+    st.write(f"Model type: {type(model)}")
     st.write("Model architecture:")
     st.write(model.summary())  # Print model summary
 except Exception as e:
@@ -95,7 +96,7 @@ if uploaded_file is not None:
         with st.spinner("Processing image..."):
             image = Image.open(uploaded_file)
             image = image.resize((256, 256))  # Ensure consistent size
-            img_array = np.array(image) / 255.0  # Normalize pixel values
+            img_array = np.array(image).astype(np.float32) / 255.0  # Normalize pixel values
             img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
             # Print shape and type of img_array for debugging
