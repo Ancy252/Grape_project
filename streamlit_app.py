@@ -30,7 +30,8 @@ st.markdown("""
     }
     .stImage img {
         max-width: 80%;
-        border-radius: 10px;
+        border-radius: 20px; /* Smooth, rounded corners */
+        border: 3px solid #6a1b9a; /* Optional: add border color matching the theme */
         margin: 0 auto;
         display: block;
     }
