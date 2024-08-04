@@ -1,24 +1,21 @@
 import streamlit as st
 from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
 import numpy as np
-import PIL
-import os
-import traceback
+from PIL import Image
+
+# Define a function to load the model and cache it
+@st.cache_resource
+def load_model_cached(model_path):
+    return load_model(model_path)
 
 # Load the trained model
-model_path = "grape_leaf_disease_3.0.h5"  # Update this to your model's path
-
-# Error handling for model loading
+model_path = 'grape_leaf_disease_3.0.h5'
 try:
-    model = load_model(model_path)
-    st.success('Model loaded successfully.')
+    model = load_model_cached(model_path)
+    st.success("Model loaded successfully!")
 except Exception as e:
-    st.error(f'Error loading model: {e}')
-    with open('error_log.txt', 'a') as log_file:
-        log_file.write(f'Model loading error: {e}\n')
-        log_file.write(traceback.format_exc())
-    st.stop()  # Stop execution if model cannot be loaded
+    st.error(f"Error loading model: {e}")
+    st.stop()
 
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
@@ -31,35 +28,26 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 if uploaded_file is not None:
     try:
-        # Load and preprocess the image
-        image = PIL.Image.open(uploaded_file)
+        image = Image.open(uploaded_file)
         image = image.resize((256, 256))
-        img_array = np.array(image)
-
-        # Check the shape of the image array
-        st.write(f"Image shape: {img_array.shape}")
-
-        # Ensure image is in the correct format (3 channels)
-        if img_array.ndim == 2:  # If grayscale
-            img_array = np.stack([img_array]*3, axis=-1)  # Convert to RGB
-        elif img_array.shape[-1] != 3:  # If not RGB
-            st.error('Image must have 3 channels (RGB).')
-            st.stop()
-
+        img_array = np.array(image) / 255.0
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-        img_array = img_array / 255.0  # Normalize the image
 
-        # Make prediction
-        predictions = model.predict(img_array)
-        predicted_class = np.argmax(predictions[0])
-        predicted_label = categories[predicted_class]
-
-        # Display result
         st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
-        st.write(f'Prediction: {predicted_label}')
-        st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
+        
+        # Make prediction
+        try:
+            predictions = model.predict(img_array)
+            st.write(f"Predictions: {predictions}")
+            predicted_class = np.argmax(predictions[0])
+            st.write(f"Predicted Class Index: {predicted_class}")
+            predicted_label = categories[predicted_class]
+
+            st.write(f'Prediction: {predicted_label}')
+            st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
+        except Exception as e:
+            st.error(f"Error during prediction: {e}")
+
     except Exception as e:
-        st.error(f'Error processing image: {e}')
-        with open('error_log.txt', 'a') as log_file:
-            log_file.write(f'Image processing error: {e}\n')
-            log_file.write(traceback.format_exc())
+        st.error(f"Error processing image: {e}")
+        st.stop()
