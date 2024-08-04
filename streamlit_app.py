@@ -58,8 +58,10 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .uploaded-image img {
+        width: 80%;
+        max-width: 300px;
         border: 5px solid #FFFFFF;
-        border-radius: 10px;
+        border-radius: 50%; /* Circular shape */
     }
     .result-container {
         display: flex;
@@ -76,7 +78,7 @@ st.markdown("""
         font-size: 1.2em;
         font-weight: bold;
         color: #4B0082;
-        background-color: #FF69B4;
+        background-color: #D3D3D3; /* Light gray background */
         padding: 10px;
         border-radius: 5px;
         text-align: center;
