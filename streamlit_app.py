@@ -35,14 +35,14 @@ st.markdown("""
         border-radius: 30px;
     }
     .title {
-        font-size: 4em;
+        font-size: 3.5em;
         font-weight: bold;
         color: #FFFFFF;
         text-align: center;
         margin-bottom: 20px;
     }
     .subtitle {
-        font-size: 1.5em;
+        font-size: 1.7em;
         color: #FFFFFF;
         text-align: center;
         margin-bottom: 10px;
@@ -58,7 +58,7 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .uploaded-image img {
-        width: 80%;
+        width: 50%;
         max-width: 300px;
         border: 10px solid #FFFFFF;
         border-radius: 50%; /* Circular shape */
@@ -75,16 +75,16 @@ st.markdown("""
         margin-top: 20px;
     }
     .result-title {
-        font-size: 5em;
+        font-size: 3.5em;
         font-weight: bold;
         color: #4B0082;
         background-color: #D3D3D3; /* Light gray background */
         padding: 20px;
-        border-radius: 5px;
+        border-radius: 10px;
         text-align: center;
     }
     .result-confidence {
-        font-size: 3em;
+        font-size: 2.4em;
         font-weight: bold;
         color: #2E8B57;
         margin-top: 10px;
