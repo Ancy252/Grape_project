@@ -13,6 +13,8 @@ model_path = 'grape_and_Pomogranate_disease_streamlit.h5'
 try:
     model = load_model_cached(model_path)
     st.success("Model loaded successfully!")
+    st.write("Model architecture:")
+    st.write(model.summary())  # Print model summary
 except Exception as e:
     st.error(f"Error loading model: {e}")
     st.stop()
@@ -82,24 +84,31 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Streamlit app
-st.title("Grape And Pomogranate Disease Prediction")
-st.write("Upload an image of a grape leaf or Pomogranate fruit to predict the disease.")
+st.title("Grape and Pomegranate Disease Prediction")
+st.write("Upload an image of a grape leaf or pomegranate fruit to predict the disease.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     try:
+        # Display loading spinner
         with st.spinner("Processing image..."):
             image = Image.open(uploaded_file)
             image = image.resize((256, 256))  # Ensure consistent size
             img_array = np.array(image) / 255.0  # Normalize pixel values
             img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
+            # Print shape and type of img_array for debugging
+            st.write(f"Image array shape: {img_array.shape}")
+            st.write(f"Image array type: {img_array.dtype}")
+
             st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
             
             # Make prediction
             try:
                 predictions = model.predict(img_array)
+                st.write(f"Raw predictions: {predictions}")
+
                 predicted_class = np.argmax(predictions[0])
                 predicted_label = categories[predicted_class]
                 confidence = predictions[0][predicted_class]
