@@ -24,14 +24,7 @@ categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight", "Healthy_Pomogranat
 st.markdown("""
     <style>
     /* Apply gradient background to the entire page */
-    body {
-        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
-        color: #ffffff;
-    }
-    .reportview-container {
-        background: none !important;
-    }
-    .sidebar .sidebar-content {
+    .reportview-container, .sidebar .sidebar-content {
         background: linear-gradient(to bottom, #3b0a45, #000000) !important;
         color: #ffffff;
     }
