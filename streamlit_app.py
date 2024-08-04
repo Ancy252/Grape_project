@@ -2,20 +2,26 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Define a function to load the model and cache it
 @st.cache_resource
 def load_model_cached(model_path):
-    return load_model(model_path)
+    try:
+        model = load_model(model_path)
+        logging.info("Model loaded successfully!")
+        return model
+    except Exception as e:
+        logging.error(f"Error loading model: {e}")
+        st.error(f"Error loading model: {e}")
+        st.stop()
 
 # Load the trained model
 model_path = 'grape_leaf_disease_3.0.h5'
-try:
-    model = load_model_cached(model_path)
-    st.success("Model loaded successfully!")
-except Exception as e:
-    st.error(f"Error loading model: {e}")
-    st.stop()
+model = load_model_cached(model_path)
 
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
@@ -38,16 +44,20 @@ if uploaded_file is not None:
         # Make prediction
         try:
             predictions = model.predict(img_array)
+            logging.info(f"Predictions: {predictions}")
             st.write(f"Predictions: {predictions}")
             predicted_class = np.argmax(predictions[0])
+            logging.info(f"Predicted Class Index: {predicted_class}")
             st.write(f"Predicted Class Index: {predicted_class}")
             predicted_label = categories[predicted_class]
 
             st.write(f'Prediction: {predicted_label}')
             st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
         except Exception as e:
+            logging.error(f"Error during prediction: {e}")
             st.error(f"Error during prediction: {e}")
 
     except Exception as e:
-        st.error(f"Error processing image: {e}")
+        logging.error(f"Error processing single image: {e}")
+        st.error(f"Error processing single image: {e}")
         st.stop()
