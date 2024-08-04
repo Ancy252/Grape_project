@@ -38,7 +38,7 @@ st.markdown("""
         border: 2px solid #6a1b9a;
         border-radius: 10px;
         padding: 10px;
-        background-color: #6a1b9a;
+        background: linear-gradient(to bottom, #6a1b9a, #000000); /* Dark violet to black gradient */
         color: white;
         text-align: center;
         font-size: 18px;
