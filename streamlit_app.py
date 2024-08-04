@@ -30,7 +30,7 @@ st.markdown("""
     }
     /* Style for the image with rounded corners and shadow */
     .stImage img {
-        max-width: 80%;
+        max-width: 60%;
         border-radius: 20px; /* Smooth, rounded corners */
         border: 3px solid #6a1b9a; /* Optional: add border color matching the theme */
         margin: 0 auto;
