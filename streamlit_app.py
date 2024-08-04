@@ -18,68 +18,36 @@ except Exception as e:
     st.stop()
 
 # Define categories
-categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
+categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
 
-# Apply custom CSS for background and prediction box styling
+# Apply custom CSS for prediction box styling
 st.markdown("""
     <style>
-    /* Ensure the gradient is applied to the entire page */
-    body {
-        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
-        color: #ffffff;
-    }
-    .reportview-container {
-        background: none !important;
-    }
-    .sidebar .sidebar-content {
-        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
-        color: #ffffff;
-    }
-    .stImage img {
-        max-width: 80%;
-        border-radius: 10px;
-        margin: 0 auto;
-        display: block;
-    }
     .prediction-box {
         border: 2px solid #6a1b9a;
-        border-radius: 15px;
-        padding: 20px;
-        background: linear-gradient(to right, #6a1b9a, #d32f2f);
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #6a1b9a;
         color: white;
         text-align: center;
-        font-size: 24px;
-        margin-top: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        font-size: 18px;
     }
     .prediction-box b {
         font-weight: bold;
-    }
-    .stButton button {
-        background-color: #d32f2f;
-        color: white;
-        border-radius: 5px;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .stButton button:hover {
-        background-color: #b71c1c;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # Streamlit app
 st.title("Grape Disease Prediction")
-st.subheader("Upload a grape leaf image to detect the disease with confidence.")
+st.write("Upload an image of a grape leaf to predict the disease.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     try:
         image = Image.open(uploaded_file)
-        image = image.resize((256, 256))  # Resize image for consistency
+        image = image.resize((256, 256))
         img_array = np.array(image) / 255.0
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
@@ -92,7 +60,7 @@ if uploaded_file is not None:
             predicted_label = categories[predicted_class]
             confidence = predictions[0][predicted_class]
 
-            # Display prediction in a styled box with increased size
+            # Display prediction in a styled box with bold text
             st.markdown(f"""
                 <div class="prediction-box">
                     <b>Prediction:</b> {predicted_label} <br>
