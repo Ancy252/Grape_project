@@ -18,7 +18,7 @@ except Exception as e:
     st.stop()
 
 # Define categories
-categories = ["Black Rot","ESCA","Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
+categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
 
 # Apply custom CSS for background and prediction box styling
 st.markdown("""
@@ -89,11 +89,10 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 if uploaded_file is not None:
     try:
-        # Display loading spinner
         with st.spinner("Processing image..."):
             image = Image.open(uploaded_file)
-            image = image.resize((256, 256))
-            img_array = np.array(image) / 255.0
+            image = image.resize((256, 256))  # Ensure consistent size
+            img_array = np.array(image) / 255.0  # Normalize pixel values
             img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
             st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
@@ -105,7 +104,7 @@ if uploaded_file is not None:
                 predicted_label = categories[predicted_class]
                 confidence = predictions[0][predicted_class]
 
-                # Display prediction in a styled box with bold text
+                # Display prediction in a styled box
                 st.markdown(f"""
                     <div class="prediction-box">
                         <b>Prediction:</b> {predicted_label} <br>
