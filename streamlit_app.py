@@ -3,6 +3,9 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
 
+# Set up the page configuration
+st.set_page_config(page_title="Grape Disease Prediction", page_icon=":grapes:", layout="centered")
+
 # Define a function to load the model and cache it
 @st.cache_resource
 def load_model_cached(model_path):
@@ -20,8 +23,7 @@ except Exception as e:
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 
-# Streamlit app
-st.set_page_config(page_title="Grape Disease Prediction", page_icon=":grapes:", layout="centered")
+# Apply custom CSS for background and styling
 st.markdown("""
     <style>
     .reportview-container {
@@ -47,6 +49,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Streamlit app
 st.title("Grape Disease Prediction")
 st.write("Upload an image of a grape leaf to predict the disease.")
 
