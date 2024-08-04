@@ -30,7 +30,7 @@ categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 st.markdown("""
     <style>
     .main {
-        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        background: linear-gradient(to right, #8A2BE2, #FF69B4);
         padding: 10px;
         border-radius: 10px;
     }
