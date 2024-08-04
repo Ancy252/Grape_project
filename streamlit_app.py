@@ -57,6 +57,10 @@ st.markdown("""
         justify-content: center;
         margin-bottom: 20px;
     }
+    .uploaded-image img {
+        border: 5px solid #FFFFFF;
+        border-radius: 10px;
+    }
     .result-container {
         display: flex;
         justify-content: center;
@@ -66,15 +70,22 @@ st.markdown("""
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
     }
     .result-title {
         font-size: 1.2em;
         font-weight: bold;
         color: #4B0082;
+        background-color: #FF69B4;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
     }
     .result-confidence {
-        font-size: 1em;
+        font-size: 1.5em;
+        font-weight: bold;
         color: #2E8B57;
+        margin-top: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -106,7 +117,7 @@ if uploaded_file is not None:
             confidence = predictions[0][predicted_class]
 
             st.markdown('<div class="result-container">', unsafe_allow_html=True)
-            st.markdown(f'<div class="result-title">Prediction: {predicted_label}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="result-title">Prediction: {predicted_label} 🎉</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="result-confidence">Confidence: {confidence:.2f}</div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
         except BrokenPipeError as e:
