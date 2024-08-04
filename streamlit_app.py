@@ -26,11 +26,62 @@ model = load_model_cached(model_path)
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 
-# Streamlit app
-st.title("Grape Disease Prediction")
-st.write("Upload an image of a grape leaf to predict the disease.")
+# Custom CSS for improved styling
+st.markdown("""
+    <style>
+    .main {
+        background-color: #f0f2f6;
+    }
+    .title {
+        font-size: 2em;
+        font-weight: bold;
+        color: #4B0082;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .subtitle {
+        font-size: 1.5em;
+        color: #4B0082;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .file-uploader {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .uploaded-image {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .result-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .result-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #4B0082;
+    }
+    .result-confidence {
+        font-size: 1em;
+        color: #2E8B57;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+# Streamlit app
+st.markdown('<div class="title">Grape Disease Prediction</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Upload an image of a grape leaf to predict the disease.</div>', unsafe_allow_html=True)
+
+uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"], key='file_uploader')
 
 if uploaded_file is not None:
     try:
@@ -39,7 +90,9 @@ if uploaded_file is not None:
         img_array = np.array(image) / 255.0
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
-        st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
+        st.markdown('<div class="uploaded-image">', unsafe_allow_html=True)
+        st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # Make prediction
         try:
@@ -50,8 +103,10 @@ if uploaded_file is not None:
             predicted_label = categories[predicted_class]
             confidence = predictions[0][predicted_class]
 
-            st.write(f'Prediction: {predicted_label}')
-            st.write(f'Confidence: {confidence:.2f}')
+            st.markdown('<div class="result-container">', unsafe_allow_html=True)
+            st.markdown(f'<div class="result-title">Prediction: {predicted_label}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="result-confidence">Confidence: {confidence:.2f}</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         except BrokenPipeError as e:
             logging.error(f"Broken pipe error during prediction: {e}")
             st.error(f"Error during prediction: {e}")
