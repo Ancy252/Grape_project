@@ -20,9 +20,6 @@ except Exception as e:
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
 
-# Define confidence threshold
-CONFIDENCE_THRESHOLD = 0.85
-
 # Apply custom CSS for background and prediction box styling
 st.markdown("""
     <style>
@@ -105,20 +102,17 @@ if uploaded_file is not None:
             try:
                 predictions = model.predict(img_array)
                 predicted_class = np.argmax(predictions[0])
+                predicted_label = categories[predicted_class]
                 confidence = predictions[0][predicted_class]
 
-                # Display prediction only if confidence is above threshold
-                if confidence >= CONFIDENCE_THRESHOLD:
-                    predicted_label = categories[predicted_class]
-                    st.markdown(f"""
-                        <div class="prediction-box">
-                            <b>Prediction:</b> {predicted_label} <br>
-                            <b>Confidence:</b> {confidence:.2f}
-                        </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.write("Prediction confidence is too low to determine the disease.")
-                    
+                # Display prediction in a styled box with bold text
+                st.markdown(f"""
+                    <div class="prediction-box">
+                        <b>Prediction:</b> {predicted_label} <br>
+                        <b>Confidence:</b> {confidence:.2f}
+                    </div>
+                """, unsafe_allow_html=True)
+
             except Exception as e:
                 st.error(f"Error during prediction: {e}")
 
