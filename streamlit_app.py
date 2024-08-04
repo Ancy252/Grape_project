@@ -38,13 +38,13 @@ if uploaded_file is not None:
         # Make prediction
         try:
             predictions = model.predict(img_array)
-            st.write(f"Predictions: {predictions}")
             predicted_class = np.argmax(predictions[0])
-            st.write(f"Predicted Class Index: {predicted_class}")
             predicted_label = categories[predicted_class]
+            confidence = predictions[0][predicted_class]
 
+            # Display only the prediction label and confidence
             st.write(f'Prediction: {predicted_label}')
-            st.write(f'Confidence: {predictions[0][predicted_class]:.2f}')
+            st.write(f'Confidence: {confidence:.2f}')
         except Exception as e:
             st.error(f"Error during prediction: {e}")
 
