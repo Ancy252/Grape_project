@@ -30,18 +30,20 @@ categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 st.markdown("""
     <style>
     .main {
-        background-color: #f0f2f6;
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        padding: 10px;
+        border-radius: 10px;
     }
     .title {
         font-size: 2em;
         font-weight: bold;
-        color: #4B0082;
+        color: #FFFFFF;
         text-align: center;
         margin-bottom: 20px;
     }
     .subtitle {
         font-size: 1.5em;
-        color: #4B0082;
+        color: #FFFFFF;
         text-align: center;
         margin-bottom: 10px;
     }
@@ -60,7 +62,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: #ffffff;
+        background: rgba(255, 255, 255, 0.8);
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
