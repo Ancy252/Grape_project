@@ -20,17 +20,29 @@ except Exception as e:
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 
-# Apply custom CSS for prediction box styling
+# Apply custom CSS for background and prediction box styling
 st.markdown("""
     <style>
+    .reportview-container {
+        background: linear-gradient(to bottom, #3b0a45, #000000);
+    }
+    .sidebar .sidebar-content {
+        background: linear-gradient(to bottom, #3b0a45, #000000);
+    }
+    .stImage img {
+        max-width: 90%;
+        margin: 0 auto;
+        display: block;
+    }
     .prediction-box {
         border: 2px solid #6a1b9a;
-        border-radius: 10px;
-        padding: 10px;
+        border-radius: 15px;
+        padding: 15px;
         background-color: #6a1b9a;
         color: white;
         text-align: center;
-        font-size: 18px;
+        font-size: 20px;
+        margin-top: 20px;
     }
     .prediction-box b {
         font-weight: bold;
@@ -47,7 +59,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 if uploaded_file is not None:
     try:
         image = Image.open(uploaded_file)
-        image = image.resize((256, 256))
+        image = image.resize((256, 256))  # Resize image for consistency
         img_array = np.array(image) / 255.0
         img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
@@ -60,7 +72,7 @@ if uploaded_file is not None:
             predicted_label = categories[predicted_class]
             confidence = predictions[0][predicted_class]
 
-            # Display prediction in a styled box with bold text
+            # Display prediction in a styled box with increased size
             st.markdown(f"""
                 <div class="prediction-box">
                     <b>Prediction:</b> {predicted_label} <br>
