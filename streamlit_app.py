@@ -23,12 +23,16 @@ categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 # Apply custom CSS for background and prediction box styling
 st.markdown("""
     <style>
-    .reportview-container {
-        background: linear-gradient(to bottom, #3b0a45, #000000);
+    /* Ensure the gradient is applied to the entire page */
+    body {
+        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
         color: #ffffff;
     }
+    .reportview-container {
+        background: none !important;
+    }
     .sidebar .sidebar-content {
-        background: linear-gradient(to bottom, #3b0a45, #000000);
+        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
         color: #ffffff;
     }
     .stImage img {
