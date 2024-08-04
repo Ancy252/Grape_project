@@ -20,6 +20,24 @@ except Exception as e:
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight"]
 
+# Apply custom CSS for prediction box styling
+st.markdown("""
+    <style>
+    .prediction-box {
+        border: 2px solid #6a1b9a;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #6a1b9a;
+        color: white;
+        text-align: center;
+        font-size: 18px;
+    }
+    .prediction-box b {
+        font-weight: bold;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Streamlit app
 st.title("Grape Disease Prediction")
 st.write("Upload an image of a grape leaf to predict the disease.")
@@ -42,9 +60,14 @@ if uploaded_file is not None:
             predicted_label = categories[predicted_class]
             confidence = predictions[0][predicted_class]
 
-            # Display only the prediction label and confidence
-            st.write(f'Prediction: {predicted_label}')
-            st.write(f'Confidence: {confidence:.2f}')
+            # Display prediction in a styled box with bold text
+            st.markdown(f"""
+                <div class="prediction-box">
+                    <b>Prediction:</b> {predicted_label} <br>
+                    <b>Confidence:</b> {confidence:.2f}
+                </div>
+            """, unsafe_allow_html=True)
+
         except Exception as e:
             st.error(f"Error during prediction: {e}")
 
