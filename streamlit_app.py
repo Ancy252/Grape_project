@@ -32,10 +32,10 @@ st.markdown("""
     .main {
         background: linear-gradient(to right, #8A2BE2, #FF69B4);
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 30px;
     }
     .title {
-        font-size: 2em;
+        font-size: 4em;
         font-weight: bold;
         color: #FFFFFF;
         text-align: center;
@@ -60,7 +60,7 @@ st.markdown("""
     .uploaded-image img {
         width: 80%;
         max-width: 300px;
-        border: 5px solid #FFFFFF;
+        border: 10px solid #FFFFFF;
         border-radius: 50%; /* Circular shape */
     }
     .result-container {
@@ -75,16 +75,16 @@ st.markdown("""
         margin-top: 20px;
     }
     .result-title {
-        font-size: 1.2em;
+        font-size: 5em;
         font-weight: bold;
         color: #4B0082;
         background-color: #D3D3D3; /* Light gray background */
-        padding: 10px;
+        padding: 20px;
         border-radius: 5px;
         text-align: center;
     }
     .result-confidence {
-        font-size: 1.5em;
+        font-size: 3em;
         font-weight: bold;
         color: #2E8B57;
         margin-top: 10px;
