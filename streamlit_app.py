@@ -28,25 +28,46 @@ st.markdown("""
         background: linear-gradient(to bottom, #3b0a45, #000000) !important;
         color: #ffffff;
     }
+    /* Style for the image with rounded corners and shadow */
     .stImage img {
         max-width: 80%;
         border-radius: 20px; /* Smooth, rounded corners */
         border: 3px solid #6a1b9a; /* Optional: add border color matching the theme */
         margin: 0 auto;
         display: block;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
     }
+    /* Style for the prediction box with gradient background and shadow */
     .prediction-box {
         border: 2px solid #6a1b9a;
         border-radius: 10px;
-        padding: 10px;
+        padding: 15px;
         background: linear-gradient(to bottom, #6a1b9a, #000000); /* Dark violet to black gradient */
         color: white;
         text-align: center;
-        font-size: 18px;
+        font-size: 20px;
         margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
     }
-    .prediction-box b {
-        font-weight: bold;
+    /* Hover effect for the prediction box */
+    .prediction-box:hover {
+        transform: scale(1.05); /* Slightly enlarge on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Enhance shadow on hover */
+    }
+    /* Style for the title */
+    h1 {
+        font-family: 'Arial', sans-serif;
+        font-size: 2.5rem;
+        color: #ffffff;
+        text-align: center;
+    }
+    /* Style for the text */
+    p, .stMarkdown {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-align: center;
     }
     </style>
 """, unsafe_allow_html=True)
