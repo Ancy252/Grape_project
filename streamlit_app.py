@@ -36,6 +36,10 @@ st.markdown("""
         margin: 0 auto;
         display: block;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        transition: box-shadow 0.3s; /* Smooth transition */
+    }
+    .stImage img:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
     }
     /* Style for the prediction box with gradient background and shadow */
     .prediction-box {
@@ -50,7 +54,6 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
         transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
     }
-    /* Hover effect for the prediction box */
     .prediction-box:hover {
         transform: scale(1.05); /* Slightly enlarge on hover */
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Enhance shadow on hover */
@@ -61,6 +64,7 @@ st.markdown("""
         font-size: 2.5rem;
         color: #ffffff;
         text-align: center;
+        margin-bottom: 20px;
     }
     /* Style for the text */
     p, .stMarkdown {
@@ -68,6 +72,11 @@ st.markdown("""
         font-size: 1.2rem;
         color: #ffffff;
         text-align: center;
+    }
+    /* Loader styles */
+    .stSpinner {
+        margin: 0 auto;
+        display: block;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -80,30 +89,32 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 if uploaded_file is not None:
     try:
-        image = Image.open(uploaded_file)
-        image = image.resize((256, 256))
-        img_array = np.array(image) / 255.0
-        img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+        # Display loading spinner
+        with st.spinner("Processing image..."):
+            image = Image.open(uploaded_file)
+            image = image.resize((256, 256))
+            img_array = np.array(image) / 255.0
+            img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
-        st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
-        
-        # Make prediction
-        try:
-            predictions = model.predict(img_array)
-            predicted_class = np.argmax(predictions[0])
-            predicted_label = categories[predicted_class]
-            confidence = predictions[0][predicted_class]
+            st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
+            
+            # Make prediction
+            try:
+                predictions = model.predict(img_array)
+                predicted_class = np.argmax(predictions[0])
+                predicted_label = categories[predicted_class]
+                confidence = predictions[0][predicted_class]
 
-            # Display prediction in a styled box with bold text
-            st.markdown(f"""
-                <div class="prediction-box">
-                    <b>Prediction:</b> {predicted_label} <br>
-                    <b>Confidence:</b> {confidence:.2f}
-                </div>
-            """, unsafe_allow_html=True)
+                # Display prediction in a styled box with bold text
+                st.markdown(f"""
+                    <div class="prediction-box">
+                        <b>Prediction:</b> {predicted_label} <br>
+                        <b>Confidence:</b> {confidence:.2f}
+                    </div>
+                """, unsafe_allow_html=True)
 
-        except Exception as e:
-            st.error(f"Error during prediction: {e}")
+            except Exception as e:
+                st.error(f"Error during prediction: {e}")
 
     except Exception as e:
         st.error(f"Error processing image: {e}")
