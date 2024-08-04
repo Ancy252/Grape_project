@@ -82,8 +82,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Streamlit app
-st.title("Grape Disease Prediction")
-st.write("Upload an image of a grape leaf to predict the disease.")
+st.title("Grape And Pomogranate Disease Prediction")
+st.write("Upload an image of a grape leaf or Pomogranate fruit to predict the disease.")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
