@@ -20,9 +20,27 @@ except Exception as e:
 # Define categories
 categories = ["Black Rot", "ESCA", "Healthy", "Leaf Blight", "Healthy_Pomogranate", "Cercospora", "Bacterial_Blight", "Anthracnose"]
 
-# Apply custom CSS for prediction box styling
+# Apply custom CSS for background and prediction box styling
 st.markdown("""
     <style>
+    /* Apply gradient background to the entire page */
+    body {
+        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
+        color: #ffffff;
+    }
+    .reportview-container {
+        background: none !important;
+    }
+    .sidebar .sidebar-content {
+        background: linear-gradient(to bottom, #3b0a45, #000000) !important;
+        color: #ffffff;
+    }
+    .stImage img {
+        max-width: 80%;
+        border-radius: 10px;
+        margin: 0 auto;
+        display: block;
+    }
     .prediction-box {
         border: 2px solid #6a1b9a;
         border-radius: 10px;
@@ -31,6 +49,7 @@ st.markdown("""
         color: white;
         text-align: center;
         font-size: 18px;
+        margin-top: 20px;
     }
     .prediction-box b {
         font-weight: bold;
