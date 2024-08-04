@@ -14,8 +14,13 @@ try:
     model = load_model_cached(model_path)
     st.success("Model loaded successfully!")
     st.write(f"Model type: {type(model)}")
-    st.write("Model architecture:")
-    st.write(model.summary())  # Print model summary
+    st.write(f"Model input shape: {model.input_shape if model.input_shape else 'Unknown'}")
+    st.write(f"Model output shape: {model.output_shape if model.output_shape else 'Unknown'}")
+
+    # Alternative method to display model layers
+    for layer in model.layers:
+        st.write(f"Layer: {layer.name}, Type: {layer.__class__.__name__}, Output Shape: {layer.output_shape}")
+
 except Exception as e:
     st.error(f"Error loading model: {e}")
     st.stop()
